@@ -10,7 +10,7 @@ import CardArea from '../components/organisms/CardArea';
 import SearchHeader from '../components/organisms/Appbar';
 
 const Board = () => {
-  // fetchCardResult
+  // fetchCardData
 
   const { data: cardData, isLoading: isCardDataLoading } = useQuery({
     // 캐시에서 데이터를 찾는 데 사용됨

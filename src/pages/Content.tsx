@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from './Loading';
 import LikesBtn from '../components/molecules/LikesBtn';
 import instance from '../apis/instance';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import SearchHeader from '../components/organisms/Appbar';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,7 +17,7 @@ import { fetchCardData } from '../apis/card/fetchCardResult';
 import { CardResult } from '../store/type/card/card';
 
 const Content: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // useParams를 통하여 uri에 있는 id를 가져옴
   const { id } = useParams<{ id: string }>();
@@ -33,10 +33,12 @@ const Content: React.FC = () => {
   // 수정된 본문
   const [editedBody, setEditedBody] = useState<string>('');
 
+  // 제목 수정 함수
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedTitle(e.target.value);
   };
 
+  // 본문 수정 함수
   const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditedBody(e.target.value);
   };
@@ -75,25 +77,13 @@ const Content: React.FC = () => {
     setIsEditing(false);
   };
 
-  // 본문 삭제 버튼을 눌렀을 때 mutation
-  const contentDeleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      return await instance.delete(`/result/${id}`);
-    },
-    onSuccess: () => {
-      // board로 이동
-      navigate('/');
-    },
-  });
+  // 미션: 삭제 구현하기(delete 활용)
 
-  // 본문 삭제 버튼을 눌렀을 때
-  const handleContentDeleteClick = () => {
-    if (matchedCard) {
-      contentDeleteMutation.mutate(matchedCard.id);
-    }
-  };
+  // 삭제 버튼을 눌렀을 때 mutation
 
-  // fetchCardResult
+  // 삭제 버튼을 눌렀을 때 -> 삭제 버튼 누르고 useNavigate 사용
+
+  // fetchCardData
   const { data: cardData, isLoading: isCardDataLoading } = useQuery({
     queryKey: ['fetchCardData'],
     queryFn: () => fetchCardData(),
@@ -161,16 +151,16 @@ const Content: React.FC = () => {
             <div className="flex justify-between mt-10">
               <LikesBtn matchedCard={matchedCard} />
               <div className="flex gap-x-2 whitespace-nowrap">
+                {/* 수정 버튼 */}
                 <IconButton aria-label="fix" onClick={handleEditClick}>
                   <BuildIcon
                     sx={{ color: 'black' }}
                     className="dark:text-white"
                   />
                 </IconButton>
-                <IconButton
-                  aria-label="delete"
-                  onClick={handleContentDeleteClick}
-                >
+
+                {/* 삭제 버튼 */}
+                <IconButton aria-label="delete" onClick={() => {}}>
                   <DeleteIcon
                     sx={{ color: 'black' }}
                     className="dark:text-white"
