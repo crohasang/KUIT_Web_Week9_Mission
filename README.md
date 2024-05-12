@@ -1,5 +1,5 @@
-# PROLOG
-CRUD 게시판 구현 프로젝트 
+# KUIT 3기 Web 9주차 미션(미완성)
+- axios + React-Query를 활용하여 CRUD 구현하기
 
 <br><br><br><br>
 
