@@ -12,7 +12,7 @@ const LikesBtn: React.FC<Props> = ({ matchedCard }) => {
   const queryClient = useQueryClient();
   const [likeCount, setLikeCount] = useState<number>(matchedCard.likes);
 
-  // 좋아요를 클릭했을 때
+  // 좋아요 버튼 patch mutation
   const contentLikesMutation = useMutation({
     mutationFn: (newData: CardResult) => {
       return instance.patch(`/result/${matchedCard.id}`, newData);
@@ -23,6 +23,7 @@ const LikesBtn: React.FC<Props> = ({ matchedCard }) => {
     },
   });
 
+  // 좋아요 버튼을 클릭했을 때
   const handleContentLikesClick = () => {
     const newLikeCount = likeCount + 1;
     setLikeCount(newLikeCount);

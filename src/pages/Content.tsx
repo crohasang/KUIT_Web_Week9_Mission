@@ -18,7 +18,10 @@ import { CardResult } from '../store/type/card/card';
 
 const Content: React.FC = () => {
   const navigate = useNavigate();
+
+  // useParams를 통하여 uri에 있는 id를 가져옴
   const { id } = useParams<{ id: string }>();
+
   const queryClient = useQueryClient();
 
   // 수정 중인지
@@ -41,11 +44,16 @@ const Content: React.FC = () => {
   // 수정 완료 후 제출 시 mutation
   const editCompleteMutation = useMutation({
     mutationFn: async (newData: CardResult) => {
+      // patch 사용
       const response = await instance.patch(`result/${id}`, newData);
       return response.data;
     },
+
+    // mutation이 성공했을 때
     onSuccess: () => {
       console.log('editCompleteMutation success!');
+
+      // 편집 중 상태를 false로
       setIsEditing(false);
       queryClient.invalidateQueries({ queryKey: ['fetchCardData'] }); // 수정이 성공하면 쿼리를 다시 가져옴
     },
