@@ -74,7 +74,6 @@ const Content: React.FC = () => {
         likes: matchedCard.likes,
       });
     }
-    setIsEditing(false);
   };
 
   // 미션: 삭제 구현하기(delete 활용)

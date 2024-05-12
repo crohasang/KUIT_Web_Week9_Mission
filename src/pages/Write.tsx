@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import instance from '../apis/instance';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
+import { CardResult } from '../store/type/card/card';
 
 const Write = () => {
   // 제목
@@ -17,10 +18,12 @@ const Write = () => {
   const date = new Date();
   const navigate = useNavigate();
 
+  // 제목 변경 함수
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTitle(e.target.value);
   };
 
+  // 본문 변경 함수
   const handleWritingChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewWriting(e.target.value);
   };
@@ -40,15 +43,7 @@ const Write = () => {
 
   // 본문 작성 후 mutation
   const contentSubmitMutation = useMutation({
-    mutationFn: async (newData: {
-      id: string;
-      title: string;
-      body: string;
-      time: string;
-      commentNum: number;
-      author: string;
-      likes: number;
-    }) => {
+    mutationFn: async (newData: CardResult) => {
       return await instance.post('/result', newData);
     },
     onSuccess: () => {
@@ -56,7 +51,7 @@ const Write = () => {
     },
   });
 
-  // 제출
+  // 제출 함수
   const handleWritingSubmit = async (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
