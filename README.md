@@ -1,4 +1,4 @@
-# KUIT 3기 Web 9주차 미션미완성
+# KUIT 3기 Web 9주차 미션
 - axios + react-query를 활용하여 CRUD 구현하기
 
 <br><br><br><br>
