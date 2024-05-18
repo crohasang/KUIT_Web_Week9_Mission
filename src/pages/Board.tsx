@@ -6,7 +6,7 @@ import TopButton from '../components/atoms/TopButton';
 
 import Loading from './Loading';
 import SearchHeader from '../components/organisms/Appbar';
-import { useFeedsDataQuery } from '../apis/card/fetchFeedsData';
+import { useFeedsDataQuery } from '../apis/fetchFeedsData';
 import FeedArea from '../components/organisms/FeedArea';
 
 const Board = () => {

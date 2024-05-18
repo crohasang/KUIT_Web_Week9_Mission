@@ -1,5 +1,5 @@
 import React from 'react';
-import useStore from '../../store/useStore';
+import useStore from '../../store/useDarkModeStore';
 import { ReactComponent as TopButtonIcon } from '../../assets/icons/topChevronDouble.svg';
 
 const TopButton = () => {

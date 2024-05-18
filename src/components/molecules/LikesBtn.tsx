@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import { useMutation, useQueryClient } from '@tanstack/react-query';
 // import instance from '../../apis/instance';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { CardResult } from '../../store/type/card/card';
+import { CardResult } from '../../store/type/card';
 
 interface Props {
   matchedCard: CardResult;

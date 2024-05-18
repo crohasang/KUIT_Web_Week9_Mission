@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as PencilSquareIcon } from '../../assets/icons/pencilSquare.svg';
-import useStore from '../../store/useStore';
+import useStore from '../../store/useDarkModeStore';
 
 const WriteBtn = () => {
   // 다크모드

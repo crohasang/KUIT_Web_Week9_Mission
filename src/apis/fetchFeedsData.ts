@@ -1,5 +1,5 @@
-import instance from '../instance';
-import { CardResult } from '../../store/type/card/card';
+import instance from './instance';
+import { CardResult } from '../store/type/card';
 import { useQuery } from '@tanstack/react-query';
 
 // 피드들의 데이터 조회 API

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import instance from '../instance';
-import { CardResult } from '../../store/type/card/card';
+import instance from './instance';
+import { CardResult } from '../store/type/card';
 
 // 수정 완료 후 제출 시 mutation
 const useContentEditMutation = (id: string) => {

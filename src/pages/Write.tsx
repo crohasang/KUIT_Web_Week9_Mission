@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { formatDate } from '../utils/formatDate';
-import useContentSubmitMutation from '../apis/card/useContentSubmitMutation';
+import useContentSubmitMutation from '../apis/useContentSubmitMutation';
 
 const Write = () => {
   // useContentSubmitMutation을 호출하여 contentSubmitMutation 객체 생성

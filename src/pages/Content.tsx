@@ -5,19 +5,16 @@ import DarkModeToggle from '../components/atoms/DarkModeToggle';
 import TopButton from '../components/atoms/TopButton';
 import Loading from './Loading';
 import LikesBtn from '../components/molecules/LikesBtn';
-// import { useNavigate } from 'react-router-dom';
 import SearchHeader from '../components/organisms/Appbar';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BuildIcon from '@mui/icons-material/Build';
 import SendIcon from '@mui/icons-material/Send';
-import { useFeedDataQuery } from '../apis/card/fetchFeedsData';
+import { useFeedDataQuery } from '../apis/fetchFeedsData';
 
-import useContentEditMutation from '../apis/card/useContentEditMutation';
+import useContentEditMutation from '../apis/useContentEditMutation';
 
 const Content: React.FC = () => {
-  // const navigate = useNavigate();
-
   // useParams를 통하여 uri에 있는 id를 가져옴
   const { id } = useParams<{ id: string }>();
 
@@ -59,12 +56,6 @@ const Content: React.FC = () => {
       await setIsEditing(false);
     }
   };
-
-  // 미션: 삭제 구현하기(delete 활용)
-
-  // 삭제 버튼을 눌렀을 때 mutation
-
-  // 삭제 버튼을 눌렀을 때 -> 삭제 버튼 누르고 useNavigate 사용
 
   if (isFeedDataLoading) {
     return <Loading />;
