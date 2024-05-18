@@ -5,9 +5,9 @@ import DarkModeToggle from '../components/atoms/DarkModeToggle';
 import TopButton from '../components/atoms/TopButton';
 
 import Loading from './Loading';
-import CardArea from '../components/organisms/CardArea';
 import SearchHeader from '../components/organisms/Appbar';
 import { useFeedsDataQuery } from '../apis/card/fetchFeedsData';
+import FeedArea from '../components/organisms/FeedArea';
 
 const Board = () => {
   // GET
@@ -30,8 +30,8 @@ const Board = () => {
         </div>
         <hr className="border-gray-300 dark:border-white" />
 
-        {/* cardData를 CardArea에 전달 */}
-        {feedsData !== undefined && <CardArea CardData={feedsData} />}
+        {/* feedsData를 FeedArea에 전달 */}
+        {feedsData !== undefined && <FeedArea feedsData={feedsData} />}
       </div>
       <DarkModeToggle />
       <TopButton />

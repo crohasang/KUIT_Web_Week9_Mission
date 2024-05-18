@@ -3,17 +3,17 @@ import { CardResult } from '../../store/type/card/card';
 import BoardCard from './BoardCard';
 
 interface Props {
-  CardData: CardResult[];
+  feedsData: CardResult[];
 }
 
-const CardArea: React.FC<Props> = ({ CardData }) => {
+const FeedArea: React.FC<Props> = ({ feedsData }) => {
   const navigate = useNavigate();
 
   return (
     <>
       <div className="flex flex-col items-center gap-y-5 my-20">
-        {CardData && CardData.length > 0 ? (
-          CardData.map((value: CardResult, index: number) => (
+        {feedsData && feedsData.length > 0 ? (
+          feedsData.map((value: CardResult, index: number) => (
             <BoardCard
               key={index}
               title={value.title}
@@ -39,4 +39,4 @@ const CardArea: React.FC<Props> = ({ CardData }) => {
   );
 };
 
-export default CardArea;
+export default FeedArea;
