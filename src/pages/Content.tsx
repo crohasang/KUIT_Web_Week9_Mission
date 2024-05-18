@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import DarkModeToggle from '../components/atoms/DarkModeToggle';
 import TopButton from '../components/atoms/TopButton';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Loading from './Loading';
 import LikesBtn from '../components/molecules/LikesBtn';
 import instance from '../apis/instance';
@@ -13,7 +13,7 @@ import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BuildIcon from '@mui/icons-material/Build';
 import SendIcon from '@mui/icons-material/Send';
-import { fetchCardData } from '../apis/card/fetchCardResult';
+import { useFeedDataQuery } from '../apis/card/fetchFeedsData';
 import { CardResult } from '../store/type/card/card';
 
 const Content: React.FC = () => {
@@ -21,6 +21,9 @@ const Content: React.FC = () => {
 
   // useParams를 통하여 uri에 있는 id를 가져옴
   const { id } = useParams<{ id: string }>();
+
+  // GET
+  const { feedData, isFeedDataLoading } = useFeedDataQuery(id!);
 
   const queryClient = useQueryClient();
 
@@ -57,21 +60,21 @@ const Content: React.FC = () => {
 
       // 편집 중 상태를 false로
       setIsEditing(false);
-      queryClient.invalidateQueries({ queryKey: ['fetchCardData'] }); // 수정이 성공하면 쿼리를 다시 가져옴
+      queryClient.invalidateQueries({ queryKey: ['fetchFeedData'] }); // 수정이 성공하면 쿼리를 다시 가져옴
     },
   });
 
   // 수정 후 제출하기 버튼을 눌렀을 때
   const handleEditCompleteClick = () => {
-    if (matchedCard) {
+    if (feedData) {
       editCompleteMutation.mutate({
-        id: matchedCard.id,
+        id: feedData.id,
         title: editedTitle,
         body: editedBody,
-        time: matchedCard.time,
-        commentNum: matchedCard.commentNum,
-        author: matchedCard.author,
-        likes: matchedCard.likes,
+        time: feedData.time,
+        commentNum: feedData.commentNum,
+        author: feedData.author,
+        likes: feedData.likes,
       });
     }
   };
@@ -82,31 +85,25 @@ const Content: React.FC = () => {
 
   // 삭제 버튼을 눌렀을 때 -> 삭제 버튼 누르고 useNavigate 사용
 
-  // fetchCardData
-  const { data: cardData, isLoading: isCardDataLoading } = useQuery({
-    queryKey: ['fetchCardData'],
-    queryFn: () => fetchCardData(),
-  });
-
-  if (isCardDataLoading) {
+  if (isFeedDataLoading) {
     return <Loading />;
   }
 
-  // id가 일치하는 카드 데이터를 찾기
-  const matchedCard = cardData
-    ? cardData.find((card: CardResult) => card.id === id)
-    : undefined;
-
   // 수정 버튼을 눌렀을 때
   const handleEditClick = () => {
-    if (matchedCard !== undefined) {
+    if (feedData !== undefined) {
       setIsEditing(true);
-      setEditedTitle(matchedCard.title);
-      setEditedBody(matchedCard.body);
+      setEditedTitle(feedData.title);
+      setEditedBody(feedData.body);
     }
   };
 
-  return matchedCard !== undefined ? (
+  // feedData가 undefined일 때를 대비하기 위한 early return
+  if (feedData == null) {
+    return <Loading />;
+  }
+
+  return (
     <div className="font-pretendard min-h-screen w-screen bg-white dark:bg-zinc-700 text-black dark:text-white flex flex-col">
       <SearchHeader />
       <div className=" text-black sm:mx-32 pb-72">
@@ -139,16 +136,16 @@ const Content: React.FC = () => {
         ) : (
           <>
             <div className="text-2xl font-bold dark:text-white mt-4">
-              {matchedCard.title}
+              {feedData.title}
             </div>
             <div className="text-sm text-gray-400 dark:text-white mt-4">
-              {matchedCard.author} | {matchedCard.time}
+              {feedData.author} | {feedData.time}
             </div>
             <div className="h-auto bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg mt-10 p-4 ">
-              {matchedCard.body}
+              {feedData.body}
             </div>
             <div className="flex justify-between mt-10">
-              <LikesBtn matchedCard={matchedCard} />
+              <LikesBtn matchedCard={feedData} />
               <div className="flex gap-x-2 whitespace-nowrap">
                 {/* 수정 버튼 */}
                 <IconButton aria-label="fix" onClick={handleEditClick}>
@@ -172,10 +169,6 @@ const Content: React.FC = () => {
       </div>
       <DarkModeToggle />
       <TopButton />
-    </div>
-  ) : (
-    <div className="font-pretendard min-h-screen w-screen bg-white dark:bg-zinc-700 text-black dark:text-white flex flex-col">
-      오류!
     </div>
   );
 };

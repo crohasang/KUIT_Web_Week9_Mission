@@ -2,14 +2,16 @@ import instance from '../instance';
 import { CardResult } from '../../store/type/card/card';
 import { useQuery } from '@tanstack/react-query';
 
-// 카드 데이터 조회 API
+// 피드들의 데이터 조회 API
 export const fetchFeedsData = async () => {
-  const response = await instance.get<CardResult[]>(
-    // 더미데이터
-    '/result'
+  const response = await instance.get<CardResult[]>('/result');
+  console.log(response);
+  return response.data;
+};
 
-    // 실제 연결
-  );
+// 특정 피드의 데이터 조회 API
+export const fetchFeedData = async (id: string) => {
+  const response = await instance.get<CardResult>(`/result/${id}`);
   console.log(response);
   return response.data;
 };
@@ -25,4 +27,11 @@ export const useFeedsDataQuery = () => {
 };
 
 // 특정 피드의 데이터 GET
-export const useFeedDataQuery = () => {};
+export const useFeedDataQuery = (feedId: string) => {
+  const { data: feedData, isLoading: isFeedDataLoading } = useQuery({
+    queryKey: ['fetchFeedData', feedId],
+    queryFn: () => fetchFeedData(feedId),
+  });
+
+  return { feedData, isFeedDataLoading };
+};
