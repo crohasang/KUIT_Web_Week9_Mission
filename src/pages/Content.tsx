@@ -3,10 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import DarkModeToggle from '../components/atoms/DarkModeToggle';
 import TopButton from '../components/atoms/TopButton';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Loading from './Loading';
 import LikesBtn from '../components/molecules/LikesBtn';
-import instance from '../apis/instance';
 // import { useNavigate } from 'react-router-dom';
 import SearchHeader from '../components/organisms/Appbar';
 import { IconButton } from '@mui/material';
@@ -14,7 +12,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BuildIcon from '@mui/icons-material/Build';
 import SendIcon from '@mui/icons-material/Send';
 import { useFeedDataQuery } from '../apis/card/fetchFeedsData';
-import { CardResult } from '../store/type/card/card';
+
+import useContentEditMutation from '../apis/card/useContentEditMutation';
 
 const Content: React.FC = () => {
   // const navigate = useNavigate();
@@ -22,10 +21,10 @@ const Content: React.FC = () => {
   // useParams를 통하여 uri에 있는 id를 가져옴
   const { id } = useParams<{ id: string }>();
 
+  const contentEditMutation = useContentEditMutation(id!);
+
   // GET
   const { feedData, isFeedDataLoading } = useFeedDataQuery(id!);
-
-  const queryClient = useQueryClient();
 
   // 수정 중인지
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -46,36 +45,18 @@ const Content: React.FC = () => {
     setEditedBody(e.target.value);
   };
 
-  // 수정 완료 후 제출 시 mutation
-  const editCompleteMutation = useMutation({
-    mutationFn: async (newData: CardResult) => {
-      // patch 사용
-      const response = await instance.patch(`result/${id}`, newData);
-      return response.data;
-    },
-
-    // mutation이 성공했을 때
-    onSuccess: () => {
-      console.log('editCompleteMutation success!');
-
-      // 편집 중 상태를 false로
-      setIsEditing(false);
-      queryClient.invalidateQueries({ queryKey: ['fetchFeedData'] }); // 수정이 성공하면 쿼리를 다시 가져옴
-    },
-  });
-
   // 수정 후 제출하기 버튼을 눌렀을 때
-  const handleEditCompleteClick = () => {
+  const handleContentEditClick = async () => {
     if (feedData) {
-      editCompleteMutation.mutate({
-        id: feedData.id,
+      await contentEditMutation.mutate({
+        // id, time, commentNum, author, likes는 그대로이므로
+        ...feedData,
+
         title: editedTitle,
         body: editedBody,
-        time: feedData.time,
-        commentNum: feedData.commentNum,
-        author: feedData.author,
-        likes: feedData.likes,
       });
+
+      await setIsEditing(false);
     }
   };
 
@@ -129,7 +110,7 @@ const Content: React.FC = () => {
               <SendIcon
                 sx={{ color: 'black', cursor: 'pointer' }}
                 className="dark:text-white"
-                onClick={handleEditCompleteClick}
+                onClick={handleContentEditClick}
               />
             </div>
           </>

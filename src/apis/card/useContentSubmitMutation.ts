@@ -10,7 +10,7 @@ const useContentSubmitMutation = () => {
       return await instance.post('/result', newData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['fetchCardData'] });
+      queryClient.invalidateQueries({ queryKey: ['fetchFeedsData'] });
     },
   });
 
