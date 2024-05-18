@@ -81,6 +81,7 @@ const Content: React.FC = () => {
       <SearchHeader />
       <div className=" text-black sm:mx-32 pb-72">
         {isEditing ? (
+          // 수정 중이 아닐 때
           <>
             <div className="flex my-8">
               <div className="text-xl font-semibold">제목</div>
@@ -107,6 +108,7 @@ const Content: React.FC = () => {
             </div>
           </>
         ) : (
+          // 수정 중이 아닐 때
           <>
             <div className="text-2xl font-bold dark:text-white mt-4">
               {feedData.title}
