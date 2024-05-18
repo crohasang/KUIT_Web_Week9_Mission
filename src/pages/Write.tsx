@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import TopButton from '../components/atoms/TopButton';
 import SearchHeader from '../components/organisms/Appbar';
 import SendIcon from '@mui/icons-material/Send';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import instance from '../apis/instance';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
-import { CardResult } from '../store/type/card/card';
+import { formatDate } from '../utils/formatDate';
+import useContentSubmitMutation from '../apis/useContentSubmitMutation';
+import ScrollToTop from '../components/atoms/ScrollToTop';
 
 const Write = () => {
+  // useContentSubmitMutation을 호출하여 contentSubmitMutation 객체 생성
+  // 글 제출할 때(POST할 때) 사용
+  const contentSubmitMutation = useContentSubmitMutation();
+
   // 제목
   const [newTitle, setNewTitle] = useState<string>('');
 
@@ -28,29 +31,6 @@ const Write = () => {
     setNewWriting(e.target.value);
   };
 
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
-
-  const queryClient = useQueryClient();
-
-  // 본문 작성 후 mutation
-  const contentSubmitMutation = useMutation({
-    mutationFn: async (newData: CardResult) => {
-      return await instance.post('/result', newData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['fetchCardData'] }); // 수정이 성공하면 쿼리를 다시 가져옴
-    },
-  });
-
   // 제출 함수
   const handleWritingSubmit = async (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>
@@ -68,9 +48,9 @@ const Write = () => {
         title: newTitle,
         body: newWriting,
         time: formatDate(date),
-        commentNum: 0,
+        commentCount: 0,
         author: '작성자',
-        likes: 0,
+        likeCount: 0,
       });
 
       await navigate('/');
@@ -111,7 +91,7 @@ const Write = () => {
           </div>
         </form>
       </div>
-      <TopButton />
+      <ScrollToTop />
     </div>
   );
 };
