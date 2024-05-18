@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 // import { useMutation, useQueryClient } from '@tanstack/react-query';
 // import instance from '../../apis/instance';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { CardResult } from '../../store/type/card';
 
 interface Props {
-  matchedCard: CardResult;
+  likeCount: number;
 }
 
-const LikesBtn: React.FC<Props> = ({ matchedCard }) => {
+const LikesBtn: React.FC<Props> = ({ likeCount }) => {
   // const queryClient = useQueryClient();
 
   // 좋아요 갯수 상태
-  const [likeCount, setLikeCount] = useState<number>(matchedCard.likes);
+  const [likeCountState, setLikeCountState] = useState<number>(likeCount);
 
   // 좋아요 버튼 patch mutation -> Content.tsx에서 patch mutation이 있었는데..
 
@@ -31,7 +30,7 @@ const LikesBtn: React.FC<Props> = ({ matchedCard }) => {
         />
       </div>
 
-      <div className="text-black dark:text-white">{likeCount}</div>
+      <div className="text-black dark:text-white">{likeCountState}</div>
     </div>
   );
 };

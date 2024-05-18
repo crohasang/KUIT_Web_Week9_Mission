@@ -2,7 +2,7 @@ import React from 'react';
 import useStore from '../../store/useDarkModeStore';
 import { ReactComponent as TopButtonIcon } from '../../assets/icons/topChevronDouble.svg';
 
-const TopButton = () => {
+const ScrollToTop = () => {
   const darkMode = useStore((state) => state.darkMode);
 
   const scrollToTop = () => {
@@ -26,4 +26,4 @@ const TopButton = () => {
   );
 };
 
-export default TopButton;
+export default ScrollToTop;

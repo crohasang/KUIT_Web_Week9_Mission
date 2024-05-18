@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import TopButton from '../components/atoms/TopButton';
 import SearchHeader from '../components/organisms/Appbar';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { formatDate } from '../utils/formatDate';
 import useContentSubmitMutation from '../apis/useContentSubmitMutation';
+import ScrollToTop from '../components/atoms/ScrollToTop';
 
 const Write = () => {
   // useContentSubmitMutation을 호출하여 contentSubmitMutation 객체 생성
@@ -48,9 +48,9 @@ const Write = () => {
         title: newTitle,
         body: newWriting,
         time: formatDate(date),
-        commentNum: 0,
+        commentCount: 0,
         author: '작성자',
-        likes: 0,
+        likeCount: 0,
       });
 
       await navigate('/');
@@ -91,7 +91,7 @@ const Write = () => {
           </div>
         </form>
       </div>
-      <TopButton />
+      <ScrollToTop />
     </div>
   );
 };

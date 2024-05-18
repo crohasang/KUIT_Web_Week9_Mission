@@ -3,9 +3,9 @@ export type CardResult = {
   title: string;
   body: string;
   time: string;
-  commentNum: number;
+  commentCount: number;
   author: string;
-  likes: number;
+  likeCount: number;
 };
 
 // endpoint가 /result가 되었으므로 CareResponse는 더 이상 사용하지 않음

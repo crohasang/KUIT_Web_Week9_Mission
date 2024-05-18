@@ -1,13 +1,11 @@
 import BoardIntroduce from '../components/organisms/BoardIntroduce';
 import BoardFilterLine from '../components/organisms/BoardFilterLine';
 import DarkModeToggle from '../components/atoms/DarkModeToggle';
-
-import TopButton from '../components/atoms/TopButton';
-
 import Loading from './Loading';
 import SearchHeader from '../components/organisms/Appbar';
 import { useFeedsDataQuery } from '../apis/fetchFeedsData';
 import FeedArea from '../components/organisms/FeedArea';
+import ScrollToTop from './../components/atoms/ScrollToTop';
 
 const Board = () => {
   // GET
@@ -34,7 +32,7 @@ const Board = () => {
         {feedsData !== undefined && <FeedArea feedsData={feedsData} />}
       </div>
       <DarkModeToggle />
-      <TopButton />
+      <ScrollToTop />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import DarkModeToggle from '../components/atoms/DarkModeToggle';
-import TopButton from '../components/atoms/TopButton';
+
 import Loading from './Loading';
 import LikesBtn from '../components/molecules/LikesBtn';
 import SearchHeader from '../components/organisms/Appbar';
@@ -13,6 +13,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useFeedDataQuery } from '../apis/fetchFeedsData';
 
 import useContentEditMutation from '../apis/useContentEditMutation';
+import ScrollToTop from './../components/atoms/ScrollToTop';
 
 const Content: React.FC = () => {
   // useParams를 통하여 uri에 있는 id를 가져옴
@@ -117,7 +118,9 @@ const Content: React.FC = () => {
               {feedData.body}
             </div>
             <div className="flex justify-between mt-10">
-              <LikesBtn matchedCard={feedData} />
+              {/* feedData의 likeCount 전달 */}
+              <LikesBtn likeCount={feedData.likeCount} />
+
               <div className="flex gap-x-2 whitespace-nowrap">
                 {/* 수정 버튼 */}
                 <IconButton aria-label="fix" onClick={handleEditClick}>
@@ -140,7 +143,7 @@ const Content: React.FC = () => {
         )}
       </div>
       <DarkModeToggle />
-      <TopButton />
+      <ScrollToTop />
     </div>
   );
 };

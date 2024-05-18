@@ -4,31 +4,13 @@
   "message": "요청에 성공하였습니다.",
   "result": [
     {
-      "id": "1c47e86e-fe7e-b908-6ecb-6320e3162772",
+      "id": "d21b5245-79c7-da6c-de01-1e7afda7f5f6",
       "title": "테스트1",
-      "body": "테스트1입니다.",
-      "time": "2024-05-12 17:43:11",
-      "commentNum": 0,
+      "body": "테스트1 본문입니다.",
+      "time": "2024-05-19 01:27:56",
+      "commentCount": 0,
       "author": "작성자",
-      "likes": 0
-    },
-    {
-      "id": "6388e07f-64dc-c0b9-e52d-fbc566659cd7",
-      "title": "테스트2",
-      "body": "테스트2 본문입니다.",
-      "time": "2024-05-12 17:43:21",
-      "commentNum": 0,
-      "author": "작성자",
-      "likes": 0
-    },
-    {
-      "id": "985306a0-1654-9328-31f5-97c472ff339d",
-      "title": "테스트3",
-      "body": "테스트3 본문입니다.",
-      "time": "2024-05-12 17:43:30",
-      "commentNum": 0,
-      "author": "작성자",
-      "likes": 0
+      "likeCount": 0
     }
   ],
   "messages": "요청에 성공하였습니다."

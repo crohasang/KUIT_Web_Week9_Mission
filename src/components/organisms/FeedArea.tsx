@@ -18,9 +18,9 @@ const FeedArea: React.FC<Props> = ({ feedsData }) => {
               key={index}
               title={value.title}
               time={value.time}
-              commentNum={value.commentNum}
+              commentNum={value.commentCount}
               author={value.author}
-              likes={value.likes}
+              likes={value.likeCount}
               onClick={() => navigate(`/content/${value.id}`)}
             />
           ))
