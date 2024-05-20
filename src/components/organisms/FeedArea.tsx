@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { CardResult } from '../../store/type/card';
+import { CardResult } from '../../type/card';
 import BoardCard from './BoardCard';
 
 interface Props {
