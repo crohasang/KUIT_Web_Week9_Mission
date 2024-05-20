@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CardResult } from '../store/type/card';
+import { CardResult } from '../type/card';
 import instance from './instance';
 
 const useContentSubmitMutation = () => {
